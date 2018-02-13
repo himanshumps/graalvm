@@ -11,7 +11,7 @@ LABEL io.k8s.description="GraalVM" \
       io.openshift.tags="builder,graalvm" \
 	  io.openshift.s2i.scripts-url=image:///usr/local/s2i
 
-ENV APP_PATH=/opt/app-root /
+ENV APP_PATH=/opt/app-root \
     PATH="$APP_PATH/graalvm-0.31/bin:$APP_PATH/apache-maven-3.5.2/bin:${PATH}" \
     JAVA_HOME=$APP_PATH/graalvm-0.31
 RUN yum install -y tar wget && yum clean all -y && rm -rf /var/cache/yum && mkdir -p $APP_PATH && cd /opt/app-root
