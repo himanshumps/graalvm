@@ -11,7 +11,7 @@ LABEL io.k8s.description="GraalVM" \
       io.openshift.tags="builder,graalvm" \
 	  io.openshift.s2i.scripts-url=image:///usr/local/s2i
 
-RUN yum install -y tar wget && yum clean all -y && rm -rf /var/cache/yum
+RUN yum install -y tar wget && yum clean all -y && rm -rf /var/cache/yum && mkdir /opt/app-root/ && cd /opt/app-root
 
 
 # TODO (optional): Copy the builder files into /opt/app-root
