@@ -5,7 +5,7 @@ MAINTAINER Himanshu Gupta <himanshu_gupta01@infosys.com>
 
 ENV BUILDER_VERSION 1.0
 
-\LABEL io.k8s.description="GraalVM" \
+LABEL io.k8s.description="GraalVM" \
       io.k8s.display-name="GraalVM" \
       io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,graalvm" \
