@@ -19,8 +19,9 @@ RUN yum install -y tar wget && yum clean all -y && rm -rf /var/cache/yum && mkdi
 COPY ./s2i/bin/ /usr/local/s2i
 WORKDIR /opt/app-root
 RUN pwd
-RUN wget https://github.com/himanshumps/graalvm/raw/master/graalvm-0.31-linux-amd64-jdk8.tar.gz http://www-eu.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz 
-RUN tar xvzf graalvm-0.31-linux-amd64-jdk8.tar.gz && tar xvzf apache-maven-3.5.2-bin.tar.gz && rm -rf graalvm-0.31-linux-amd64-jdk8.tar.gz apache-maven-3.5.2-bin.tar.gz
+RUN wget http://download.oracle.com/otn/utilities_drivers/oracle-labs/graalvm-0.31-linux-amd64-jdk8.tar.gz?AuthParam=1518553561_640f38bd2cccdf27183680bbeefd9041 http://www-eu.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz 
+RUN mv graalvm-0.31-linux-amd64-jdk8.tar.gz?AuthParam=1518553561_640f38bd2cccdf27183680bbeefd9041 graalvm-0.31-linux-amd64-jdk8.tar.gz && tar xvzf graalvm-0.31-linux-amd64-jdk8.tar.gz
+RUN tar xvzf apache-maven-3.5.2-bin.tar.gz && rm -rf graalvm-0.31-linux-amd64-jdk8.tar.gz apache-maven-3.5.2-bin.tar.gz
 
 # TODO: Drop the root user and make the content of /opt/app-root owned by user 1001
 RUN chown -R 1001:1001 /opt/app-root
