@@ -11,25 +11,14 @@ LABEL io.k8s.description="GraalVM" \
       io.openshift.tags="builder,graalvm" \
 	  io.openshift.s2i.scripts-url=image:///usr/local/s2i
 
-ENV APP_PATH=/opt/app-root/
+ENV APP_PATH=/opt/app-root
 RUN yum install -y tar wget && yum clean all -y && rm -rf /var/cache/yum && mkdir -p $APP_PATH && cd /opt/app-root
-
-
-# TODO (optional): Copy the builder files into /opt/app-root
-# COPY ./<builder_folder>/ /opt/app-root/
-
-# TODO: Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image
-# sets io.openshift.s2i.scripts-url label that way, or update that label
 COPY ./s2i/bin/ /usr/local/s2i
-RUN wget https://github.com/himanshumps/graalvm/raw/master/graalvm-0.31-linux-amd64-jdk8.tar.gz http://www-eu.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
 
-RUN tar xvzf graalvm-0.31-linux-amd64-jdk8.tar.gz && tar xvzf apache-maven-3.5.2-bin.tar.gz && rm -rf graalvm-0.31-linux-amd64-jdk8.tar.gz apache-maven-3.5.2-bin.tar.gz
+RUN wget https://github.com/himanshumps/graalvm/raw/master/graalvm-0.31-linux-amd64-jdk8.tar.gz http://www-eu.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gzm && tar xvzf graalvm-0.31-linux-amd64-jdk8.tar.gz && tar xvzf apache-maven-3.5.2-bin.tar.gz && rm -rf graalvm-0.31-linux-amd64-jdk8.tar.gz apache-maven-3.5.2-bin.tar.gz
 
-ENV PATH="$APP_PATH/graalvm-0.31/bin:$APP_PATH/apache-maven-3.5.2/bin:${PATH}"
-
-RUN echo $PATH
-
-ENV JAVA_HOME $(pwd)/graalvm-0.31
+ENV PATH="$APP_PATH/graalvm-0.31/bin:$APP_PATH/apache-maven-3.5.2/bin:${PATH}" \
+    JAVA_HOME $APP_PATH/graalvm-0.31
 # TODO: Drop the root user and make the content of /opt/app-root owned by user 1001
 RUN chown -R 1001:1001 /opt/app-root
 
