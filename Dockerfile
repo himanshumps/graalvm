@@ -18,7 +18,7 @@ COPY ./s2i/bin/ /usr/local/s2i
 RUN wget https://github.com/himanshumps/graalvm/raw/master/graalvm-0.31-linux-amd64-jdk8.tar.gz http://www-eu.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gzm && tar xvzf graalvm-0.31-linux-amd64-jdk8.tar.gz && tar xvzf apache-maven-3.5.2-bin.tar.gz && rm -rf graalvm-0.31-linux-amd64-jdk8.tar.gz apache-maven-3.5.2-bin.tar.gz
 
 ENV PATH="$APP_PATH/graalvm-0.31/bin:$APP_PATH/apache-maven-3.5.2/bin:${PATH}" \
-    JAVA_HOME $APP_PATH/graalvm-0.31
+    JAVA_HOME=$APP_PATH/graalvm-0.31
 # TODO: Drop the root user and make the content of /opt/app-root owned by user 1001
 RUN chown -R 1001:1001 /opt/app-root
 
