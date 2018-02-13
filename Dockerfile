@@ -11,7 +11,8 @@ LABEL io.k8s.description="GraalVM" \
       io.openshift.tags="builder,graalvm" \
 	  io.openshift.s2i.scripts-url=image:///usr/local/s2i
 
-RUN yum install -y tar wget && yum clean all -y && rm -rf /var/cache/yum && mkdir /opt/app-root/ && cd /opt/app-root
+ENV APP_PATH=/opt/app-root/
+RUN yum install -y tar wget && yum clean all -y && rm -rf /var/cache/yum && mkdir -p $APP_PATH && cd /opt/app-root
 
 
 # TODO (optional): Copy the builder files into /opt/app-root
@@ -24,7 +25,9 @@ RUN wget https://github.com/himanshumps/graalvm/raw/master/graalvm-0.31-linux-am
 
 RUN tar xvzf graalvm-0.31-linux-amd64-jdk8.tar.gz && tar xvzf apache-maven-3.5.2-bin.tar.gz && rm -rf graalvm-0.31-linux-amd64-jdk8.tar.gz apache-maven-3.5.2-bin.tar.gz
 
-RUN export PATH=$(pwd)/apache-maven-3.5.2/bin:$(pwd)/graalvm-0.31/bin;$PATH:$(pwd)/apache-maven-3.5.2/bin
+ENV PATH="$APP_PATH/graalvm-0.31/bin:$APP_PATH/apache-maven-3.5.2/bin:${PATH}"
+
+RUN echo $PATH
 
 ENV JAVA_HOME $(pwd)/graalvm-0.31
 # TODO: Drop the root user and make the content of /opt/app-root owned by user 1001
