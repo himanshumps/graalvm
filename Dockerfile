@@ -18,7 +18,7 @@ RUN yum install -y tar wget && yum clean all -y && rm -rf /var/cache/yum && mkdi
 
 COPY ./s2i/bin/ /usr/local/s2i
 WORKDIR /opt/app-root
-RUN wget http://localhost:8085/getFile/graalvm-0.31-linux-amd64-jdk8.tar.gz http://localhost:8085/getFile/apache-maven-3.5.2-bin.tar.gz
+RUN wget http://PUNITP143579L:8085/getFile/graalvm-0.31-linux-amd64-jdk8.tar.gz http://PUNITP143579L:8085/getFile/apache-maven-3.5.2-bin.tar.gz
 RUN tar xvzf graalvm-0.31-linux-amd64-jdk8.tar.gz && tar xvzf apache-maven-3.5.2-bin.tar.gz && rm -rf graalvm-0.31-linux-amd64-jdk8.tar.gz apache-maven-3.5.2-bin.tar.gz
 
 # TODO: Drop the root user and make the content of /opt/app-root owned by user 1001 
