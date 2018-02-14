@@ -1,6 +1,6 @@
 # aikido-graalvm
 FROM registry.access.redhat.com/rhel7/rhel
-
+ARG GRAALVM_DOWNLOAD_PATH
 MAINTAINER Himanshu Gupta <himanshu_gupta01@infosys.com>
 
 ENV BUILDER_VERSION 1.0
@@ -18,8 +18,8 @@ RUN yum install -y tar wget && yum clean all -y && rm -rf /var/cache/yum && mkdi
 
 COPY ./s2i/bin/ /usr/local/s2i
 WORKDIR /opt/app-root
-RUN pwd
-RUN wget http://download.oracle.com/otn/utilities_drivers/oracle-labs/graalvm-0.31-linux-amd64-jdk8.tar.gz?AuthParam=1518554180_31a3aa23040cefe630d684c69114e055 http://www-eu.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz 
+RUN pwd && echo $GRAALVM_DOWNLOAD_PATH
+RUN wget $GRAALVM_DOWNLOAD_PATH http://www-eu.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz 
 RUN mv graalvm-0.31-linux-amd64-jdk8.tar.gz* graalvm-0.31-linux-amd64-jdk8.tar.gz && tar xvzf graalvm-0.31-linux-amd64-jdk8.tar.gz
 RUN tar xvzf apache-maven-3.5.2-bin.tar.gz && rm -rf graalvm-0.31-linux-amd64-jdk8.tar.gz apache-maven-3.5.2-bin.tar.gz
 
